@@ -1,40 +1,57 @@
-import { useState } from "react";
-// import Content from "./Content";
+import { useEffect, useState } from "react";
+import Content from "./Content";
+import Logo from "./Logo";
+import Search from "./Search";
+import getCity from "./getCity";
 
 function App() {
+  const [loc, setLoc] = useState("Ulan bator");
+  const [weather, setWeather] = useState(["windy","thunder"]);
+  const [temp, setTemp] = useState([10.2,-1.1]);
+  const [updatedData, setUpdatedData] = useState([]);
+  const [weatherText, setWeatherText] = useState([]);
+  const weatherApiKey = "196aaa3c4fc44db792e81525251501"
+  const getCountries = async () => {
+    try{
+    const response = await fetch("https://countriesnow.space/api/v0.1/countries");
+    const result = await response.json();
+    const data = result.data;
+    const updatedData = getCity(data);
+      setUpdatedData(updatedData);
+    } catch(error){
+      console.log(error);
+    }
+  }
+  
+
+  const getWeather = async (loc) => {
+    try{
+      const respWeather = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${loc}`);
+      const rWeather = await respWeather.json();
+      console.log(rWeather);
+      const temp = [rWeather.forecast.forecastday[0].hour[12].temp_c,rWeather.forecast.forecastday[0].hour[23].temp_c];
+      setTemp(temp);
+      const weather = [rWeather.forecast.forecastday[0].hour[12].condition.text,rWeather.forecast.forecastday[0].hour[23].condition.text]
+      setWeather(weather);
+      setWeatherText([weather[0],weather[1]]);
+      
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getCountries();
+    getWeather(loc);
+  },[]
+  )
 
   return(
-    <div className="w-screen h-screen bg-gray-100 flex justify-center items-center">
-      <div className="w-1/2 h-full bg-gray-100 flex justify-center items-center">
-        <div className="w-[414px] h-[828px] bg-white/75 rounded-3xl flex justify-center z-30 shadow-lg backdrop-blur-md">
-          <div className="w-5/6 h-32 flex">
-            <div className="w-4/5 h-full flex flex-col">
-              <div className="mt-12 text-gray-400">Date</div>
-              <div className="font-bold text-5xl">Location</div>
-            </div>
-            <img src="./localization_icon.svg" alt="loc" className="w-12 h-12 mt-16"/>
-          </div>
-          <div>
-            <img src="" alt="" />
-          </div>
-        </div>
-      </div>
-      <div className="w-40 h-60 bg-gray-100 absolute flex justify-center">
-        <div className="w-20 h-20 absolute left-1/2 bg-slate-900 rounded-bl-full"></div>
-        <div className="w-32 h-32 rounded-full absolute bg-gray-100 z-10 flex justify-evenly" style={{top: "56px"}}>
-          <img src="./left.svg" className="w-11" />
-          <img src="./right.svg" className="w-11" />
-        </div>
-        <div className="absolute w-20 h-48 bg-slate-900" style={{left: "115px"}}></div>
-        <div className="w-20 h-20 absolute left-1/2 bg-slate-900 rounded-tl-full" style={{top: "160px"}}></div>
-      </div>
-      <div className="absolute size-32 border border-gray-300 rounded-full z-20"></div>
-      <div className="absolute border border-gray-300 rounded-full z-20" style={{width: "300px", height: "300px"}}></div>
-      <div className="absolute border border-gray-300 rounded-full z-20" style={{width: "550px", height: "550px"}}></div>
-      <div className="absolute border border-gray-300 rounded-full z-20" style={{width: "960px", height: "960px"}}></div>
-      <div className="w-1/2 h-full bg-slate-900 rounded-bl-3xl flex justify-center items-center">
-        <div className="w-[414px] h-[828px] rounded-3xl bg-slate-900/75 z-30 shadow-lg bg-[#111827]/75 backdrop-blur-md"></div>
-      </div>
+    <div className="w-screen h-screen bg-gray-100 flex justify-center items-center font-sans">
+      <Content loc = {loc} setLoc = {setLoc} weather = {weather[0]} setWeather = {setWeather} temp = {temp[0]} theme = "day" weatherText = {weatherText[0]}/>
+      <Search updatedData = {updatedData} loc = {loc} setLoc = {setLoc} getWeather = {getWeather}/>
+      <Logo />
+      <Content loc = {loc} setLoc = {setLoc} weather = {weather[1]} setWeather = {setWeather} temp = {temp[1]} theme = "night" weatherText = {weatherText[1]}/>
     </div>
   )
   
