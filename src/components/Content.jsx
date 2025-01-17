@@ -53,7 +53,38 @@ const Content = (props) => {
   const icon = getMoodImage(weatherText);
   const bgColor = theme === "day" ? "bg-gray-100" : "bg-slate-900";
   console.log(airQ);
-  
+ const color1 = () => {
+  if(airQ?.co <= 575){return "greenyellow";}
+  else if(airQ?.co <= 1150){return "orange";}
+  else if(airQ?.co <= 1725){return "orangered";}
+  else if(airQ?.co <= 2300){return "crimson";}
+  else if(airQ?.co <= 6900){return "purple";}
+  else{return "maroon";}
+ }
+ const color2 = () => {
+  if(airQ?.so2 <= 50){return "greenyellow";}
+  else if(airQ?.so2 <= 100){return "orange";}
+  else if(airQ?.so2 <= 150){return "orangered";}
+  else if(airQ?.so2 <= 200){return "crimson";}
+  else if(airQ?.so2 <= 300){return "purple";}
+  else{return "maroon";}
+ }
+ const color3 = () => {
+  if(airQ?.pm2_5 <= 30){return "greenyellow";}
+  else if(airQ?.pm2_5 <= 60){return "orange";}
+  else if(airQ?.pm2_5 <= 90){return "orangered";}
+  else if(airQ?.pm2_5 <= 120){return "crimson";}
+  else if(airQ?.pm2_5 <= 250){return "purple";}
+  else{return "maroon";}
+ }
+ const color4 = () => {
+  if(airQ?.pm10 <= 50){return "greenyellow";}
+  else if(airQ?.pm10 <= 100){return "orange";}
+  else if(airQ?.pm10 <= 250){return "orangered";}
+  else if(airQ?.pm10 <= 350){return "crimson";}
+  else if(airQ?.pm10 <= 430){return "purple";}
+  else{return "maroon";}
+ }
   // console.log(airQ["gb-defra-index"]);
   return (
     <div
@@ -83,25 +114,25 @@ const Content = (props) => {
             alt={theme}
             className="w-[350px] transition duration-300 group-hover:opacity-0"
           />
-          <div className="flex items-center w-[350px] h-[350px] absolute bg-{bgColor} opacity-0 transition duration-500 flex-col group-hover:opacity-100">
+          <div className="flex items-center w-[350px] h-[350px] absolute opacity-0 transition duration-500 flex-col group-hover:opacity-100">
             <p className="text-[35px] mt-[40px]">Hazardous air index</p>
             <p className={airQ && airQ['gb-defra-index'] <=5 ? "text-green-300 text-[100px] font-bold" : "text-red-500 text-[100px] font-bold"}>{airQ && airQ['gb-defra-index']}</p>
             <div className="w-[350px] h-[100px] flex text-[12px]">
               <div className="w-1/4 h-[100px] flex flex-col items-center gap-[10px] border-r border-black justify-center">
                 <p>CO(μg/m<sup>3</sup>)</p>
-                <p>{airQ?.co}</p>
+                <p style={{color: color1()}} className={`font-bold`}>{airQ?.co}</p>
               </div>
               <div className="w-1/4 h-[100px] flex flex-col items-center gap-[10px] border-r border-black justify-center">
                 <p>SO<sub>2</sub>(μg/m<sup>3</sup>)</p>
-                <p>{airQ?.so2}</p>
+                <p style={{color: color2()}} className={`font-bold`}>{airQ?.so2}</p>
               </div>
               <div className="w-1/4 h-[100px] flex flex-col items-center gap-[10px] border-r border-black justify-center">
                 <p>PM2.5(μg/m<sup>3</sup>)</p>
-                <p>{airQ?.pm2_5}</p>
+                <p style={{color: color3()}} className={`font-bold`}>{airQ?.pm2_5}</p>
               </div>
               <div className="w-1/4 h-[100px] flex flex-col items-center gap-[10px] justify-center">
                 <p>PM10(μg/m<sup>3</sup>)</p>
-                <p>{airQ?.pm10}</p>
+                <p style={{color: color4()}} className={`font-bold`}>{airQ?.pm10}</p>
               </div>
             </div>
           </div>

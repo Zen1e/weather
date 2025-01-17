@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Content from "./Content";
-import Logo from "./Logo";
-import Search from "./Search";
-import getCity from "./getCity";
+import Content from "./components/Content";
+import Logo from "./components/Logo";
+import Search from "./components/Search";
+import getCity from "./utilities/getCity";
 
 function App() {
   const [loc, setLoc] = useState("Ulan bator");
@@ -37,7 +37,7 @@ function App() {
       const temp = [rWeather.forecast.forecastday[0].hour[12].temp_c,rWeather.forecast.forecastday[0].hour[23].temp_c];
       setTemp(temp);
       const weather = [rWeather.forecast.forecastday[0].hour[12].condition.text,rWeather.forecast.forecastday[0].hour[23].condition.text]
-      const airQ = [rWeather.forecast.forecastday[0].hour[12].air_quality,rWeather.forecast.forecastday[0].hour[12].air_quality];
+      const airQ = [rWeather.forecast.forecastday[0].hour[12].air_quality,rWeather.forecast.forecastday[0].hour[23].air_quality];
       setAirQ(airQ);
       setWeather(weather);
       
@@ -68,6 +68,8 @@ function App() {
   else{
   return(
     <div className="w-screen h-screen bg-gray-100 flex justify-center items-center font-sans">
+      <img src="./Ellipse 21.png" className="absolute left-[12vw] top-[40px]"/>
+      <img src="./Ellipse 22.png" className="absolute right-[13vw] bottom-[60px]"/>
       <Content loc = {loc} temp = {temp[0]} theme = "day" weatherText = {weather[0]} airQ = {airQ[0]}/>
       <Search updatedData = {updatedData} loc = {loc} setLoc = {setLoc} getWeather = {getWeather}/>
       <Logo />
