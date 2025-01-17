@@ -1,5 +1,4 @@
 import {useEffect, useState } from "react";
-import data from "./data.jsx"
 
 const Search = (props) => {
     const {updatedData, loc, setLoc, getWeather} = props;
@@ -11,8 +10,8 @@ const Search = (props) => {
         }
         else{
         const filtered = updatedData.filter((elem)=> elem.toLowerCase().includes(inputValue.toLowerCase()));
-        if(filtered.length>4){
-            filtered.length = 4;
+        if(filtered.length>10){
+            filtered.length = 10;
         }
         setFiltered(filtered);
         }
@@ -22,6 +21,7 @@ const Search = (props) => {
         const loc = match[0];
         setLoc(loc);
         getWeather(loc);
+        setInputValue("");
     }
     const onChange = () => {
         setInputValue(event.target.value);
