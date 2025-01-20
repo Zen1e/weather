@@ -11,13 +11,13 @@ const Content = (props) => {
 
   const getMoodImage = (mood) => {
     if (mood === "Sunny" || mood === "Clear ") {
-      return "./" + theme + "/sunny.png";
+      return "./" + theme + "/sunny.webp";
     } else if (
       mood === "Cloudy" ||
       mood === "Partly cloudy" ||
       mood === "Overcast "
     ) {
-      return "./" + theme + "/cloudy.png";
+      return "./" + theme + "/cloudy.webp";
     } else if (
       mood === "Patchy rain possible" ||
       mood === "Patchy light drizzle" ||
@@ -29,7 +29,7 @@ const Content = (props) => {
       mood === "Heavy rain" ||
       mood === "Patchy rain nearby"
     ) {
-      return "./" + theme + "/rain.png";
+      return "./" + theme + "/rain.webp";
     } else if (
       mood === "Patchy snow possible" ||
       mood === "Patchy sleet possible" ||
@@ -42,11 +42,11 @@ const Content = (props) => {
       mood === "Blowing snow" ||
       mood === "Blizzard"
     ) {
-      return "./" + theme + "/snow.png";
+      return "./" + theme + "/snow.webp";
     } else if (mood === "Thundery outbreak possible") {
-      return "./" + theme + "/thunder.png";
+      return "./" + theme + "/thunder.webp";
     } else {
-      return "./" + theme + "/windy.png";
+      return "./" + theme + "/windy.webp";
     }
   };
 
